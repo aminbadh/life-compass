@@ -23,7 +23,7 @@ interface WheelOfLifeChartProps {
 
 export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChartProps) {
     const chartData = categories.map(category => ({
-        subject: category.label.replace(' & ', ' &\n'),
+        subject: category.label,
         value: scores[category.key],
         fullMark: 10,
     }));
@@ -32,11 +32,30 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
     const mutedColor = "hsl(210 20% 40%)";
     const borderColor = "hsl(210 20% 85%)";
     
+    const renderIconTick = (props: any) => {
+        const { x, y, payload } = props;
+        const category = categories.find(c => c.label === payload.value);
+
+        if (!category) {
+            return null;
+        }
+
+        const Icon = category.icon;
+
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <g transform="translate(-12, -12)">
+                    <Icon color={mutedColor} width={24} height={24} />
+                </g>
+            </g>
+        );
+    };
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
                 <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: mutedColor, fontSize: 12 }} />
+                <PolarAngleAxis dataKey="subject" tick={renderIconTick} />
                 <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                 <Radar
                     name="Life Compass"
