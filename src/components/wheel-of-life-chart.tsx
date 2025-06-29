@@ -44,8 +44,8 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
 
         return (
             <g transform={`translate(${x},${y})`}>
-                <g transform="translate(-10, -10)">
-                    <Icon color={mutedColor} width={20} height={20} />
+                <g transform="translate(-8, -8)">
+                    <Icon color={mutedColor} width={16} height={16} />
                 </g>
             </g>
         );
@@ -55,7 +55,7 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         <ResponsiveContainer width="100%" height="100%">
             <RadarChart cx="50%" cy="50%" outerRadius="75%" data={chartData}>
                 <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis dataKey="subject" tick={renderIconTick} />
+                <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={10} />
                 <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                 <Radar
                     name="Life Compass"
