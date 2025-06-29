@@ -28,7 +28,7 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
     const chartData = categories.map(category => ({
         subject: category.label,
         value: scores[category.key],
-        fullMark: 12,
+        fullMark: 10,
     }));
 
     const primaryColor = "hsl(var(--chart-1))";
@@ -52,9 +52,9 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         const Icon = category.icon;
         const color = groupColors[category.group];
         return (
-            <g transform={`translate(${x + category.offsetx * 10},${y + category.offsety * 10})`}>
-                <g transform="translate(-10, -10)">
-                    <Icon color={color} width={20} height={20} />
+            <g transform={`translate(${x},${y})`}>
+                <g transform="translate(-12, -12)">
+                    <Icon color={color} width={24} height={24} />
                 </g>
             </g>
         );
@@ -68,23 +68,39 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         return <circle cx={cx} cy={cy} r={5} stroke={color} strokeWidth={2} fill="hsl(var(--card))" />;
     };
 
+    const legendData = [
+        { name: 'Work', color: groupColors.work },
+        { name: 'Health', color: groupColors.health },
+        { name: 'Relationships', color: groupColors.relationships }
+    ];
+
     return (
-        <ResponsiveContainer width="100%" height="100%">
-            <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData}>
-                <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={15}/>
-                <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
-                <Radar
-                    name="Life Compass"
-                    dataKey="value"
-                    stroke={primaryColor}
-                    fill={primaryColor}
-                    fillOpacity={0.6}
-                    animationDuration={300}
-                    dot={<CustomizedDot />}
-                    activeDot={{ r: 7 }}
-                />
-            </RadarChart>
-        </ResponsiveContainer>
+        <div className="w-full h-full flex flex-col">
+            <ResponsiveContainer width="100%" height="100%" className="flex-1">
+                <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData} >
+                    <PolarGrid stroke={borderColor} />
+                    <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={18}/>
+                    <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
+                    <Radar
+                        name="Life Compass"
+                        dataKey="value"
+                        stroke={primaryColor}
+                        fill={primaryColor}
+                        fillOpacity={0.6}
+                        animationDuration={300}
+                        dot={<CustomizedDot />}
+                        activeDot={{ r: 7 }}
+                    />
+                </RadarChart>
+            </ResponsiveContainer>
+            <div className="flex justify-center items-center gap-6 mt-2 text-xs text-muted-foreground">
+                {legendData.map((item) => (
+                    <div key={item.name} className="flex items-center gap-2">
+                        <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
+                        <span>{item.name}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }

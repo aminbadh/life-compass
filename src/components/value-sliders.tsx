@@ -1,7 +1,7 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import * as SliderPrimitive from "@radix-ui/react-slider"
 import type { WellbeingRecommendationsInput } from "@/ai/flows/generate-wellbeing-recommendations";
 
 type Category = {
@@ -19,9 +19,9 @@ interface ValueSlidersProps {
 
 export default function ValueSliders({ categories, scores, onSliderChange }: ValueSlidersProps) {
     const groupColors = {
-        work: 'var(--chart-1)',
-        health: 'var(--chart-2)',
-        relationships: 'var(--chart-3)',
+        work: 'hsl(var(--chart-1))',
+        health: 'hsl(var(--chart-2))',
+        relationships: 'hsl(var(--chart-3))',
     };
 
     return (
@@ -37,7 +37,7 @@ export default function ValueSliders({ categories, scores, onSliderChange }: Val
                             </Label>
                             <span className="w-12 text-right text-lg font-semibold" style={{ color }}>{scores[key]}</span>
                         </div>
-                        <Slider
+                        <SliderPrimitive.Root
                             id={key}
                             min={1}
                             max={10}
@@ -45,7 +45,16 @@ export default function ValueSliders({ categories, scores, onSliderChange }: Val
                             value={[scores[key]]}
                             onValueChange={([value]) => onSliderChange(key, value)}
                             aria-label={label}
-                        />
+                            className="relative flex w-full touch-none select-none items-center"
+                        >
+                            <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+                                <SliderPrimitive.Range className="absolute h-full" style={{ backgroundColor: color }} />
+                            </SliderPrimitive.Track>
+                            <SliderPrimitive.Thumb 
+                                className="block h-5 w-5 rounded-full border-2 bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" 
+                                style={{ borderColor: color }}
+                            />
+                        </SliderPrimitive.Root>
                     </div>
                 );
             })}
