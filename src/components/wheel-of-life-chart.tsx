@@ -16,6 +16,7 @@ type Category = {
     key: keyof WellbeingRecommendationsInput;
     label: string;
     icon: React.ElementType;
+    group: 'work' | 'health' | 'relationships';
 };
 
 interface WheelOfLifeChartProps {
@@ -27,12 +28,18 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
     const chartData = categories.map(category => ({
         subject: category.label,
         value: scores[category.key],
-        fullMark: 10,
+        fullMark: 12,
     }));
 
-    const primaryColor = "hsl(210 60% 50%)";
-    const mutedColor = "hsl(210 20% 40%)";
-    const borderColor = "hsl(210 20% 85%)";
+    const primaryColor = "hsl(var(--chart-1))";
+    const mutedColor = "hsl(var(--muted-foreground))";
+    const borderColor = "hsl(var(--border))";
+
+    const groupColors = {
+        work: 'hsl(var(--chart-1))',
+        health: 'hsl(var(--chart-2))',
+        relationships: 'hsl(var(--chart-3))',
+    };
     
     const renderIconTick = (props: any) => {
         const { x, y, payload } = props;
@@ -43,21 +50,29 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         }
 
         const Icon = category.icon;
-        console.log("x=",x,y)
+        const color = groupColors[category.group];
         return (
             <g transform={`translate(${x + category.offsetx * 10},${y + category.offsety * 10})`}>
                 <g transform="translate(-10, -10)">
-                    <Icon color={mutedColor} width={20} height={20} />
+                    <Icon color={color} width={20} height={20} />
                 </g>
             </g>
         );
+    };
+
+    const CustomizedDot = ({ cx, cy, payload }: any) => {
+        const category = categories.find(c => c.label === payload.subject);
+        if (!category) return null;
+
+        const color = groupColors[category.group];
+        return <circle cx={cx} cy={cy} r={5} stroke={color} strokeWidth={2} fill="hsl(var(--card))" />;
     };
 
     return (
         <ResponsiveContainer width="100%" height="100%">
             <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData}>
                 <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis dataKey="subject" tick={renderIconTick} />
+                <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={15}/>
                 <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                 <Radar
                     name="Life Compass"
@@ -66,6 +81,8 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
                     fill={primaryColor}
                     fillOpacity={0.6}
                     animationDuration={300}
+                    dot={<CustomizedDot />}
+                    activeDot={{ r: 7 }}
                 />
             </RadarChart>
         </ResponsiveContainer>
