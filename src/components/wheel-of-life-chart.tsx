@@ -11,6 +11,8 @@ import {
 import type { WellbeingRecommendationsInput } from "@/ai/flows/generate-wellbeing-recommendations";
 
 type Category = {
+    offsety: any;
+    offsetx: any;
     key: keyof WellbeingRecommendationsInput;
     label: string;
     icon: React.ElementType;
@@ -41,11 +43,11 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         }
 
         const Icon = category.icon;
-
+        console.log("x=",x,y)
         return (
-            <g transform={`translate(${x},${y})`}>
-                <g transform="translate(-8, -8)">
-                    <Icon color={mutedColor} width={16} height={16} />
+            <g transform={`translate(${x + category.offsetx * 10},${y + category.offsety * 10})`}>
+                <g transform="translate(-10, -10)">
+                    <Icon color={mutedColor} width={20} height={20} />
                 </g>
             </g>
         );
@@ -53,9 +55,9 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
 
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
+            <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData}>
                 <PolarGrid stroke={borderColor} />
-                <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={20} />
+                <PolarAngleAxis dataKey="subject" tick={renderIconTick} />
                 <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                 <Radar
                     name="Life Compass"
