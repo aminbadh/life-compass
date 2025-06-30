@@ -14,12 +14,12 @@ import WheelOfLifeChart from "./wheel-of-life-chart";
 const categories = [
     { key: "career", label: "Career & Work", icon: Briefcase, group: "work" },
     { key: "finances", label: "Finances & Money", icon: DollarSign, group: "work" },
+    { key: "personalGrowth", label: "Personal Growth & Learning", icon: BrainCircuit, group: "work" },
+    { key: "environment", label: "Physical Environment", icon: Home, group: "work" },
     { key: "health", label: "Health & Wellbeing", icon: HeartPulse, group: "health" },
+    { key: "fun", label: "Fun & Recreation", icon: Smile, group: "health" },
     { key: "family", label: "Family & Friends", icon: Users, group: "relationships" },
     { key: "relationships", label: "Relationships & Love", icon: Heart, group: "relationships"  },
-    { key: "personalGrowth", label: "Personal Growth & Learning", icon: BrainCircuit, group: "work" },
-    { key: "fun", label: "Fun & Recreation", icon: Smile, group: "health" },
-    { key: "environment", label: "Physical Environment", icon: Home, group: "work" },
 ] as const;
 
 type CategoryKey = typeof categories[number]['key'];
@@ -27,12 +27,12 @@ type CategoryKey = typeof categories[number]['key'];
 const initialScores: WellbeingRecommendationsInput = {
     career: 5,
     finances: 5,
+    personalGrowth: 5,
+    environment: 5,
     health: 5,
+    fun: 5,
     family: 5,
     relationships: 5,
-    personalGrowth: 5,
-    fun: 5,
-    environment: 5,
 };
 
 export default function LifeCompassApp() {

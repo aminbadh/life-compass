@@ -13,12 +13,12 @@ import {z} from 'genkit';
 const WellbeingRecommendationsInputSchema = z.object({
   career: z.number().describe('Score for Career & Work (1-10)'),
   finances: z.number().describe('Score for Finances & Money (1-10)'),
+  personalGrowth: z.number().describe('Score for Personal Growth & Learning (1-10)'),
+  environment: z.number().describe('Score for Physical Environment (1-10)'),
   health: z.number().describe('Score for Health & Wellbeing (1-10)'),
+  fun: z.number().describe('Score for Fun & Recreation (1-10)'),
   family: z.number().describe('Score for Family & Friends (1-10)'),
   relationships: z.number().describe('Score for Relationships & Love (1-10)'),
-  personalGrowth: z.number().describe('Score for Personal Growth & Learning (1-10)'),
-  fun: z.number().describe('Score for Fun & Recreation (1-10)'),
-  environment: z.number().describe('Score for Physical Environment (1-10)'),
 });
 export type WellbeingRecommendationsInput = z.infer<typeof WellbeingRecommendationsInputSchema>;
 
@@ -41,12 +41,12 @@ const prompt = ai.definePrompt({
 
 Career & Work: {{career}}
 Finances & Money: {{finances}}
+Personal Growth & Learning: {{personalGrowth}}
+Physical Environment: {{environment}}
 Health & Wellbeing: {{health}}
+Fun & Recreation: {{fun}}
 Family & Friends: {{family}}
 Relationships & Love: {{relationships}}
-Personal Growth & Learning: {{personalGrowth}}
-Fun & Recreation: {{fun}}
-Physical Environment: {{environment}}
 
 Recommendations:`,
 });
