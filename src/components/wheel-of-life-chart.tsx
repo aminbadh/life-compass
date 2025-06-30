@@ -11,8 +11,6 @@ import {
 import type { WellbeingRecommendationsInput } from "@/ai/flows/generate-wellbeing-recommendations";
 
 type Category = {
-    offsety: any;
-    offsetx: any;
     key: keyof WellbeingRecommendationsInput;
     label: string;
     icon: React.ElementType;
@@ -31,8 +29,7 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         fullMark: 10,
     }));
 
-    const primaryColor = "hsl(var(--chart-1))";
-    const mutedColor = "hsl(var(--muted-foreground))";
+    const primaryColor = "hsl(var(--primary))";
     const borderColor = "hsl(var(--border))";
 
     const groupColors = {
