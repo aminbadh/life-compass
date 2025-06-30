@@ -49,12 +49,25 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
             return null;
         }
 
+        const index = categories.indexOf(category);
+
+        const numItems = categories.length;
+        const radius = 8; // Based on your desired maximum offset
+        const startAngle = -Math.PI / 2; // Start at the top (-90 degrees or -π/2 radians)
+
+        // Calculate the angle for the current item
+        // We subtract Math.PI / 2 to start the first item at the "12 o'clock" position
+        const angle = startAngle + (index / numItems) * (2 * Math.PI);
+
+        const offsetx = parseFloat((radius * Math.cos(angle)).toFixed(2));
+        const offsety = parseFloat((radius * Math.sin(angle)).toFixed(2));
+
         const Icon = category.icon;
         const color = groupColors[category.group];
         return (
-            <g transform={`translate(${x},${y})`}>
-                <g transform="translate(-12, -12)">
-                    <Icon color={color} width={24} height={24} />
+            <g transform={`translate(${x + offsetx},${y + offsety})`}>
+                <g transform="translate(-10, -10)">
+                    <Icon color={color} width={20} height={20} />
                 </g>
             </g>
         );
@@ -79,7 +92,7 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
             <ResponsiveContainer width="100%" height="100%" className="flex-1">
                 <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData} >
                     <PolarGrid stroke={borderColor} />
-                    <PolarAngleAxis dataKey="subject" tick={renderIconTick} tickMargin={18}/>
+                    <PolarAngleAxis dataKey="subject" tick={renderIconTick} />
                     <PolarRadiusAxis angle={30} domain={[0, 10]} tick={false} axisLine={false} />
                     <Radar
                         name="Life Compass"

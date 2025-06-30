@@ -12,14 +12,14 @@ import ValueSliders from "./value-sliders";
 import WheelOfLifeChart from "./wheel-of-life-chart";
 
 const categories = [
-    { key: "career", label: "Career & Work", icon: Briefcase, offsetx: 0, offsety: -1.2, group: "work" },
-    { key: "finances", label: "Finances & Money", icon: DollarSign, offsetx: 0.85, offsety: -0.85, group: "work" },
-    { key: "health", label: "Health & Wellbeing", icon: HeartPulse, offsetx: 1.2, offsety: 0, group: "health" },
-    { key: "family", label: "Family & Friends", icon: Users, offsetx: 0.85, offsety: 0.85, group: "relationships" },
-    { key: "relationships", label: "Relationships & Love", icon: Heart, offsetx: 0, offsety: 1.2, group: "relationships"  },
-    { key: "personalGrowth", label: "Personal Growth & Learning", icon: BrainCircuit, offsetx: -0.85, offsety: 0.85, group: "work" },
-    { key: "fun", label: "Fun & Recreation", icon: Smile, offsetx: -1.2, offsety: 0, group: "health" },
-    { key: "environment", label: "Physical Environment", icon: Home, offsetx: -0.85, offsety: -0.85, group: "work" },
+    { key: "career", label: "Career & Work", icon: Briefcase, group: "work" },
+    { key: "finances", label: "Finances & Money", icon: DollarSign, group: "work" },
+    { key: "health", label: "Health & Wellbeing", icon: HeartPulse, group: "health" },
+    { key: "family", label: "Family & Friends", icon: Users, group: "relationships" },
+    { key: "relationships", label: "Relationships & Love", icon: Heart, group: "relationships"  },
+    { key: "personalGrowth", label: "Personal Growth & Learning", icon: BrainCircuit, group: "work" },
+    { key: "fun", label: "Fun & Recreation", icon: Smile, group: "health" },
+    { key: "environment", label: "Physical Environment", icon: Home, group: "work" },
 ] as const;
 
 type CategoryKey = typeof categories[number]['key'];
