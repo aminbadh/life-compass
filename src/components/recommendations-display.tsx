@@ -43,8 +43,7 @@ export default function RecommendationsDisplay({ recommendations, isLoading }: R
     return (
         <Card className="w-full min-h-[200px]">
             <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="text-primary"/>
+                <CardTitle>
                     AI-Powered Recommendations
                 </CardTitle>
             </CardHeader>
