@@ -80,7 +80,7 @@ export default function LifeCompassApp() {
                             <p className="text-lg font-medium text-muted-foreground">General Score</p>
                             <p className="text-4xl font-bold text-primary">{generalScore}</p>
                         </div>
-                        <Button onClick={handleGetRecommendations} disabled={isPending} size="lg">
+                        <Button onClick={handleGetRecommendations} disabled={isPending} size="lg" className="w-full md:w-auto">
                             {isPending ? "Generating..." : "Get AI Recommendations"}
                         </Button>
                     </div>
@@ -89,7 +89,7 @@ export default function LifeCompassApp() {
 
             <div className="w-full space-y-8">
                  <Card className="flex flex-col min-h-[400px] md:min-h-0 md:aspect-square">
-                    <CardContent className="p-2 sm:p-4 w-full h-full flex flex-col">
+                    <CardContent className="p-2 sm:p-4 w-full flex-1 flex flex-col">
                         <WheelOfLifeChart scores={scores} categories={categories} />
                     </CardContent>
                 </Card>
