@@ -2,7 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Lightbulb } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface RecommendationsDisplayProps {
     recommendations: string | null;
@@ -24,16 +25,23 @@ export default function RecommendationsDisplay({ recommendations, isLoading }: R
         }
 
         if (recommendations) {
-            return recommendations.split('\n').filter(line => line.trim() !== '').map((line, index) => (
-                <p key={index} className="mb-2 last:mb-0">
-                    {line}
-                </p>
-            ));
+            return (
+                 <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    className="space-y-4"
+                    components={{
+                        p: ({node, ...props}) => <p className="leading-relaxed" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-2" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                    }}
+                >
+                    {recommendations}
+                </ReactMarkdown>
+            );
         }
 
         return (
             <div className="text-center text-muted-foreground py-8">
-                <Lightbulb className="w-12 h-12 mx-auto mb-4" />
                 <p className="font-medium">Your personalized recommendations will appear here.</p>
                 <p className="text-sm">Adjust the sliders and click the button to get started.</p>
             </div>
@@ -43,8 +51,7 @@ export default function RecommendationsDisplay({ recommendations, isLoading }: R
     return (
         <Card className="w-full min-h-[200px]">
             <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="text-primary"/>
+                <CardTitle>
                     AI-Powered Recommendations
                 </CardTitle>
             </CardHeader>
