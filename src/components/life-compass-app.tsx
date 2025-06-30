@@ -75,8 +75,8 @@ export default function LifeCompassApp() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <ValueSliders categories={categories} scores={scores} onSliderChange={handleSliderChange} />
-                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
-                        <div className="text-center sm:text-left">
+                     <div className="flex flex-col items-stretch md:flex-row md:items-center md:justify-between gap-4 pt-4">
+                        <div className="text-center md:text-left">
                             <p className="text-lg font-medium text-muted-foreground">General Score</p>
                             <p className="text-4xl font-bold text-primary">{generalScore}</p>
                         </div>
