@@ -4,6 +4,7 @@ import type { WellbeingRecommendationsInput } from "@/ai/flows/generate-wellbein
 import { getAIRecommendations } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { BrainCircuit, Briefcase, DollarSign, Heart, HeartPulse, Home, Smile, Users } from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
@@ -35,8 +36,9 @@ const initialScores: WellbeingRecommendationsInput = {
     relationships: 5,
 };
 
-export default function LifeCompassApp() {
+export default function LifeCompassApp({ hasEnvApiKey = true }: { hasEnvApiKey?: boolean }) {
     const [scores, setScores] = useState<WellbeingRecommendationsInput>(initialScores);
+    const [apiKey, setApiKey] = useState("");
     const [recommendations, setRecommendations] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
@@ -51,8 +53,17 @@ export default function LifeCompassApp() {
     }, [scores]);
 
     const handleGetRecommendations = () => {
+        if (!hasEnvApiKey && !apiKey.trim()) {
+            toast({
+                variant: "destructive",
+                title: "API Key Required",
+                description: "Please enter your Gemini API key to proceed.",
+            });
+            return;
+        }
+
         startTransition(async () => {
-            const result = await getAIRecommendations(scores);
+            const result = await getAIRecommendations(scores, apiKey.trim() || undefined);
             if (result.startsWith("Sorry")) {
                  toast({
                     variant: "destructive",
@@ -75,14 +86,25 @@ export default function LifeCompassApp() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <ValueSliders categories={categories} scores={scores} onSliderChange={handleSliderChange} />
-                     <div className="flex flex-col items-stretch md:flex-row md:items-center md:justify-between gap-4 pt-4">
-                        <div className="text-center md:text-left">
+                     <div className="flex flex-col items-stretch xl:flex-row xl:items-end justify-between gap-6 pt-4">
+                        <div className="text-center xl:text-left">
                             <p className="text-lg font-medium text-muted-foreground">General Score</p>
                             <p className="text-4xl font-bold text-primary">{generalScore}</p>
                         </div>
-                        <Button onClick={handleGetRecommendations} disabled={isPending} size="lg" className="w-full md:w-auto">
-                            {isPending ? "Generating..." : "Get AI Recommendations"}
-                        </Button>
+                        <div className="flex flex-col gap-3 w-full xl:w-auto">
+                            {!hasEnvApiKey && (
+                                <Input
+                                    type="password"
+                                    placeholder="Enter Gemini API Key..."
+                                    value={apiKey}
+                                    onChange={(e) => setApiKey(e.target.value)}
+                                    className="w-full"
+                                />
+                            )}
+                            <Button onClick={handleGetRecommendations} disabled={isPending} size="lg" className="w-full">
+                                {isPending ? "Generating..." : "Get AI Recommendations"}
+                            </Button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

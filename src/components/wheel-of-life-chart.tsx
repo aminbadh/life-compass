@@ -43,7 +43,7 @@ export default function WheelOfLifeChart({ scores, categories }: WheelOfLifeChar
         const category = categories.find(c => c.label === payload.value);
 
         if (!category) {
-            return null;
+            return <g></g>;
         }
 
         const index = categories.indexOf(category);

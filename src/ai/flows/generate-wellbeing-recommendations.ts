@@ -8,7 +8,8 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {genkit, z} from 'genkit';
+import {googleAI} from '@genkit-ai/googleai';
 
 const WellbeingRecommendationsInputSchema = z.object({
   career: z.number().describe('Score for Career & Work (1-10)'),
@@ -28,16 +29,30 @@ const WellbeingRecommendationsOutputSchema = z.object({
 export type WellbeingRecommendationsOutput = z.infer<typeof WellbeingRecommendationsOutputSchema>;
 
 export async function generateWellbeingRecommendations(
-  input: WellbeingRecommendationsInput
+  input: WellbeingRecommendationsInput,
+  apiKey?: string
 ): Promise<WellbeingRecommendationsOutput> {
+  if (apiKey) {
+    const customAi = genkit({
+      plugins: [googleAI({ apiKey })],
+      model: 'googleai/gemini-2.5-flash',
+    });
+    
+    const customPrompt = customAi.definePrompt({
+      name: 'wellbeingRecommendationsPromptInline',
+      input: {schema: WellbeingRecommendationsInputSchema},
+      output: {schema: WellbeingRecommendationsOutputSchema},
+      prompt: promptString,
+    });
+
+    const { output } = await customPrompt(input);
+    return output!;
+  }
+
   return generateWellbeingRecommendationsFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'wellbeingRecommendationsPrompt',
-  input: {schema: WellbeingRecommendationsInputSchema},
-  output: {schema: WellbeingRecommendationsOutputSchema},
-  prompt: `You are a wellbeing coach. Analyze the following Wheel of Life scores and provide personalized, actionable recommendations for the user. Focus on areas with lower scores to provide specific advice for improvement.
+const promptString = `You are a wellbeing coach. Analyze the following Wheel of Life scores and provide personalized, actionable recommendations for the user. Focus on areas with lower scores to provide specific advice for improvement.
 
 Career & Work: {{career}}
 Finances & Money: {{finances}}
@@ -48,7 +63,13 @@ Fun & Recreation: {{fun}}
 Family & Friends: {{family}}
 Relationships & Love: {{relationships}}
 
-Recommendations:`,
+Recommendations:`;
+
+const prompt = ai.definePrompt({
+  name: 'wellbeingRecommendationsPrompt',
+  input: {schema: WellbeingRecommendationsInputSchema},
+  output: {schema: WellbeingRecommendationsOutputSchema},
+  prompt: promptString,
 });
 
 const generateWellbeingRecommendationsFlow = ai.defineFlow(

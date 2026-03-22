@@ -2,6 +2,8 @@ import LifeCompassApp from "@/components/life-compass-app";
 import { Compass } from "lucide-react";
 
 export default function Home() {
+  const hasEnvApiKey = !!process.env.GEMINI_API_KEY;
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-4 sm:p-8 md:p-12 bg-background">
       <div className="w-full max-w-7xl">
@@ -14,7 +16,7 @@ export default function Home() {
             Visualize your life balance and get AI-powered recommendations for a more fulfilling life.
           </p>
         </header>
-        <LifeCompassApp />
+        <LifeCompassApp hasEnvApiKey={hasEnvApiKey} />
       </div>
     </main>
   );

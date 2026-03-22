@@ -2,9 +2,9 @@
 
 import { generateWellbeingRecommendations, type WellbeingRecommendationsInput } from "@/ai/flows/generate-wellbeing-recommendations";
 
-export async function getAIRecommendations(input: WellbeingRecommendationsInput) {
+export async function getAIRecommendations(input: WellbeingRecommendationsInput, apiKey?: string) {
     try {
-        const result = await generateWellbeingRecommendations(input);
+        const result = await generateWellbeingRecommendations(input, apiKey);
         return result.recommendations;
     } catch (error) {
         console.error("Error generating recommendations:", error);
