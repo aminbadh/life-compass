@@ -1,72 +1,3 @@
-# Welcome to Antigravity!
-
-Welcome to your new developer home! Your Firebase Studio project has been successfully migrated to Antigravity.
-
-Antigravity is our next-generation, agent-first IDE designed for high-velocity, autonomous development. Because Antigravity runs locally on your machine, you now have access to powerful local workflows and fully integrated AI editing capabilities that go beyond a cloud-based web IDE.
-
-## Getting Started
-- **Run Locally**: Use the **Run and Debug** menu on the left sidebar to start your local development server.
-  - Or in a terminal run `npm run dev` and visit `http://localhost:9002`.
-- **Deploy**: You can deploy your changes to Firebase App Hosting by using the integrated terminal and standard Firebase CLI commands, just as you did in Firebase Studio.
-- **Cleanup**: Cleanup unused artifacts with the @cleanup workflow.
-
-Enjoy the next era of AI-driven development!
-
-File any bugs at https://github.com/firebase/firebase-tools/issues
-
-**Firebase Studio Export Date:** 2026-03-22
-
-
----
-
-## Previous README.md contents:
-
-# Welcome to Antigravity!
-
-Welcome to your new developer home! Your Firebase Studio project has been successfully migrated to Antigravity.
-
-Antigravity is our next-generation, agent-first IDE designed for high-velocity, autonomous development. Because Antigravity runs locally on your machine, you now have access to powerful local workflows and fully integrated AI editing capabilities that go beyond a cloud-based web IDE.
-
-## Getting Started
-- **Run Locally**: Use the **Run and Debug** menu on the left sidebar to start your local development server.
-  - Or in a terminal run `npm run dev` and visit `http://localhost:9002`.
-- **Deploy**: You can deploy your changes to Firebase App Hosting by using the integrated terminal and standard Firebase CLI commands, just as you did in Firebase Studio.
-- **Cleanup**: Cleanup unused artifacts with the @cleanup workflow.
-
-Enjoy the next era of AI-driven development!
-
-File any bugs at https://github.com/firebase/firebase-tools/issues
-
-**Firebase Studio Export Date:** 2026-03-22
-
-
----
-
-## Previous README.md contents:
-
-# Welcome to Antigravity!
-
-Welcome to your new developer home! Your Firebase Studio project has been successfully migrated to Antigravity.
-
-Antigravity is our next-generation, agent-first IDE designed for high-velocity, autonomous development. Because Antigravity runs locally on your machine, you now have access to powerful local workflows and fully integrated AI editing capabilities that go beyond a cloud-based web IDE.
-
-## Getting Started
-- **Run Locally**: Use the **Run and Debug** menu on the left sidebar to start your local development server.
-  - Or in a terminal run `npm run dev` and visit `http://localhost:9002`.
-- **Deploy**: You can deploy your changes to Firebase App Hosting by using the integrated terminal and standard Firebase CLI commands, just as you did in Firebase Studio.
-- **Cleanup**: Cleanup unused artifacts with the @cleanup workflow.
-
-Enjoy the next era of AI-driven development!
-
-File any bugs at https://github.com/firebase/firebase-tools/issues
-
-**Firebase Studio Export Date:** 2026-03-22
-
-
----
-
-## Previous README.md contents:
-
 # Life Compass
 
 Visualize your life balance and get AI-powered recommendations for a more fulfilling life.
@@ -75,52 +6,51 @@ Visualize your life balance and get AI-powered recommendations for a more fulfil
 
 Life Compass is an interactive web application designed to help you reflect on and improve your life balance. Based on the popular "Wheel of Life" coaching tool, this app allows you to rate your satisfaction across eight key areas of your life. The results are instantly visualized on a radar chart, giving you a clear snapshot of your current life balance.
 
-The app's standout feature is its integration with generative AI. After assessing your life areas, you can receive personalized, actionable recommendations from an AI coach to help you focus on areas that need attention and create a more harmonious life.
+The app uses **Genkit** to provide personalized, actionable recommendations from an AI coach.
 
 ### Key Features
 
 *   **Interactive Wheel of Life:** Rate eight different life categories, including career, finances, health, and relationships.
 *   **Dynamic Visualization:** See your life balance represented on a color-coded radar chart that updates in real-time.
 *   **AI-Powered Recommendations:** Get personalized advice from an AI coach to help you improve your wellbeing.
-*   **Modern, Responsive UI:** A clean and intuitive interface built with modern web technologies.
+*   **Modern, Responsive UI:** A clean and intuitive interface built with Next.js, Tailwind CSS, and ShadCN UI.
 
 ## Built With
 
-This project is built with a modern, full-stack TypeScript architecture:
-
 *   [Next.js](https://nextjs.org/) - React Framework
-*   [React](https://reactjs.org/) - UI Library
-*   [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
-*   [ShadCN UI](https://ui.shadcn.com/) - Component Library
-*   [Genkit (Google AI)](https://firebase.google.com/docs/genkit) - AI Integration Toolkit
-*   [TypeScript](https://www.typescriptlang.org/)
+*   [Genkit](https://firebase.google.com/docs/genkit) - AI Integration Toolkit
+*   [Tailwind CSS](https://tailwindcss.com/) - Styling
+*   [ShadCN UI](https://ui.shadcn.com/) - UI Components
+*   [Recharts](https://recharts.org/) - Visualization
 
 ## Getting Started
 
-To get a local copy up and running, follow these simple steps.
-
 ### Prerequisites
 
-Make sure you have Node.js and npm installed on your machine.
+*   Node.js 20+
 *   npm
-    ```sh
-    npm install npm@latest -g
-    ```
 
 ### Installation
 
-1.  Clone the repo (if you have it on GitHub) or download the source code.
-2.  Install NPM packages
+1.  Clone the repository:
+    ```sh
+    git clone https://github.com/aminbadh/life-compass.git
+    ```
+2.  Install dependencies:
     ```sh
     npm install
     ```
+3.  Set up environment variables:
+    Create a `.env` file and add your `GOOGLE_GENAI_API_KEY`.
 
 ### Running the Application
 
 To run the app in development mode:
-
 ```sh
 npm run dev
 ```
+Open [http://localhost:9002](http://localhost:9002) in your browser.
 
-Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
+## Deployment
+
+This project is optimized for deployment on **Vercel**. Simply connect your GitHub repository to Vercel and it will automatically detect the Next.js setup.
