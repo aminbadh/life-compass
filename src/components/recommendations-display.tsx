@@ -26,15 +26,18 @@ export default function RecommendationsDisplay({ recommendations, isLoading }: R
 
         if (recommendations) {
             return (
-                 <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    className="space-y-4"
-                    components={{
-                        p: ({node, ...props}) => <p className="leading-relaxed" {...props} />,
-                        ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-2" {...props} />,
-                        strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
-                    }}
-                >
+                     <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        className="space-y-4"
+                        components={{
+                            p: ({node, ...props}) => <p className="leading-relaxed" {...props} />,
+                            ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-2" {...props} />,
+                            li: ({node, ...props}) => <li className="text-muted-foreground" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-semibold text-foreground" {...props} />,
+                            h2: ({node, ...props}) => <h2 className="text-xl font-bold mt-6 mb-3" {...props} />,
+                            h3: ({node, ...props}) => <h3 className="text-lg font-semibold mt-4 mb-2" {...props} />,
+                        }}
+                    >
                     {recommendations}
                 </ReactMarkdown>
             );
